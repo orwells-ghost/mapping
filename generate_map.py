@@ -1,20 +1,20 @@
-import folium
-from wiki_scrape import get_volDict
+import folium, pandas
 
 
 # GPS Coords at Pioneer Courthouse
 map = folium.Map(location=[39.8283, -98.5795], zoom_start=6)
 
 # Create feature group and add to map
-fg = folium.FeatureGroup(name="My Map")
+fg = folium.FeatureGroup(name="Pandas Map")
 
-# Get dictionary of volcanoes from scripe
-volDict = get_volDict()
+data = pandas.read_csv("us_volcano_data.csv")
+lat = list(data["Latitude"])
+lon = list(data["Longitude"])
 
-for volcano in volDict:
-	fg.add_child(folium.Marker(location=volDict[volcano][1], popup=("%s - Elevation: %s") % (volcano, volDict[volcano][0]), icon=folium.Icon(color='green')))
+for lt, ln in zip(lat, lon):
+	fg.add_child(folium.Marker(location=[lt, ln], popup="Hi, are you lost?", icon=folium.Icon(color='green')))
 
 map.add_child(fg)
 
 # Save map
-map.save("Map1.html")
+map.save("PandasMap.html")
