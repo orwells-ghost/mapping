@@ -1,7 +1,9 @@
-import folium
+import folium, re, requests, bs4
+from wiki_scrape import get_volDict
+
 
 # GPS Coords at Pioneer Courthouse
-map = folium.Map(location=[45.518751, -122.678794], zoom_start=15)
+map = folium.Map(location=[39.8283, -98.5795], zoom_start=6)
 
 # List of coordinates
 coords = [[45.518751, -122.678794], [45.520426, -122.677938],[45.521335, -122.681368], [45.518020, -122.683182], [45.517104, -122.679727]]
