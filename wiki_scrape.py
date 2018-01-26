@@ -1,3 +1,4 @@
+import re, requests, bs4
 def get_volDict():
 	"""
 	Function to collate dictionary of US volcanoes with elevation and geo coordinates by scraping wikipedia
