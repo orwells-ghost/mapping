@@ -1,10 +1,12 @@
 import folium, pandas
 
 # Read data from csv and save to dataframe
-data = pandas.read_csv("us_volcano_data.csv")
+data = pandas.read_csv("volcano_locations_world.csv")
 lat = list(data["Latitude"])
 lon = list(data["Longitude"])
+data.Elevation*=3.28084 # Convert meters to feet
 elev = list(data["Elevation"])
+vName = list(data["Volcano Name"])
 
 def color_producer(elev):
 	"""
@@ -32,8 +34,10 @@ map = folium.Map(location=[39.8283, -98.5795], zoom_start=6)
 fg = folium.FeatureGroup(name="Pandas Map")
 
 # Loop through each list simultaneously
-for lt, ln, el in zip(lat, lon, elev):
-	fg.add_child(folium.Marker(location=[lt, ln], popup=str(el), icon=folium.Icon(color=color_producer(el))))
+for lt, ln, el, vn in zip(lat, lon, elev, vName):
+	string = vn + ": " + str(el) + " feet"
+	fg.add_child(folium.CircleMarker(location=[lt, ln], popup=str(string), fill_color=color_producer(el), 
+		color='grey', fill_opacity=0.7, radius=2500))
 
 # Add child fg (Marker) to
 map.add_child(fg)
